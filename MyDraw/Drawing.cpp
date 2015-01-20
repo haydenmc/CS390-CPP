@@ -22,6 +22,7 @@ MERCHANTABILITY AND FITNESS FOR ANY PARTICULAR PURPOSE.
 #include "StdAfx.h"
 #include "Drawing.h"
 #include "Line.h"
+#include "MyRectangle.h"
 
 // Constructor/Destructor
 Drawing::Drawing(void)
@@ -101,6 +102,32 @@ Drawing::OnMouse(CView * cview, int nFlags, CPoint point) {
 				this->previousY = point.y;
 
 				// Redraw window. This will clal the draw method.
+				cview->RedrawWindow();
+			}
+			else if (this->editMode == Drawing::NewRectangleMode) {
+
+				// Edit mode is NewRectangleMode. 
+				// This is because the user just selected the Figure->Rectangle menu
+
+				// Create a new rectangle.
+				MyRectangle * rectangle = new MyRectangle(point.x, point.y, point.x, point.y);
+
+				// Add to the list of figures
+				this->figures.push_back(rectangle);
+
+				// Now switch to select mode
+				this->editMode = SelectMode;
+
+				// Select only the last control point of the line 
+				// so dragging will modify this control point.
+				this->selectAll(false);
+				rectangle->selectLast(true);
+
+				// Update previous mouse coordinates
+				this->previousX = point.x;
+				this->previousY = point.y;
+
+				// Redraw window. This will call the draw method.
 				cview->RedrawWindow();
 			}
 			else if (this->editMode == Drawing::SelectMode) {

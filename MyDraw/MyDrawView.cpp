@@ -25,6 +25,7 @@ BEGIN_MESSAGE_MAP(CMyDrawView, CView)
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONUP()
 	ON_WM_LBUTTONDOWN()
+	ON_COMMAND(ID_FIGURE_RECTANGLE, &CMyDrawView::OnFigureRectangle)
 END_MESSAGE_MAP()
 
 // CMyDrawView construction/destruction
@@ -126,4 +127,11 @@ afx_msg void CMyDrawView::OnLButtonDown(UINT nFlags,CPoint point)
 	CMyDrawDoc* pDoc = GetDocument();
 
 	pDoc->drawing.OnMouse(this, nFlags, point);
+}
+
+
+void CMyDrawView::OnFigureRectangle()
+{
+	CMyDrawDoc* pDoc = GetDocument();
+	pDoc->drawing.setEditMode(Drawing::NewRectangleMode);
 }

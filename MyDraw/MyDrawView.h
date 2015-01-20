@@ -45,6 +45,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnFigureLine();
+	afx_msg void OnFigureRectangle();
 };
 
 #ifndef _DEBUG  // debug version in MyDrawView.cpp
