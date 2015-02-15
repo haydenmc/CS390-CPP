@@ -31,6 +31,7 @@ const double Figure::smallDistance = 10;
 Figure::Figure(FigureType figureType) 
 {
 	this->figureType = figureType;
+	this->fillColor = RGB(0, 0, 0); // default fill color
 }
 
 Figure::~Figure(void)
@@ -47,6 +48,11 @@ Figure::FigureType Figure::getFigureType() const
 const vector<ControlPoint *> & Figure::getControlPoints()
 {
 	return this->controlPoints;
+}
+
+void Figure::setFillColor(COLORREF color)
+{
+	this->fillColor = color;
 }
 
 // Draw figure with control points if selected

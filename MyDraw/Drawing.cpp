@@ -28,6 +28,7 @@ MERCHANTABILITY AND FITNESS FOR ANY PARTICULAR PURPOSE.
 // Constructor/Destructor
 Drawing::Drawing(void)
 {
+	this->colorFill = RGB(0, 0, 0);
 	// Initial mode is selectMode
 	this->editMode = SelectMode;
 
@@ -59,6 +60,13 @@ void
 Drawing::setEditMode(EditMode mode)
 {
 	this->editMode = mode;
+}
+
+// Set the fill color
+void
+Drawing::setFillColor(COLORREF color)
+{
+	this->colorFill = color;
 }
 
 // Call back when the mouse is pressed, moved, or released.
@@ -102,7 +110,7 @@ Drawing::OnMouse(CView * cview, int nFlags, CPoint point) {
 				this->previousX = point.x;
 				this->previousY = point.y;
 
-				// Redraw window. This will clal the draw method.
+				// Redraw window. This will call the draw method.
 				cview->RedrawWindow();
 			}
 			else if (this->editMode == Drawing::NewRectangleMode) {
@@ -112,6 +120,7 @@ Drawing::OnMouse(CView * cview, int nFlags, CPoint point) {
 
 				// Create a new rectangle.
 				MyRectangle * rectangle = new MyRectangle(point.x, point.y, point.x, point.y);
+				rectangle->setFillColor(this->colorFill);
 
 				// Add to the list of figures
 				this->figures.push_back(rectangle);
@@ -133,6 +142,7 @@ Drawing::OnMouse(CView * cview, int nFlags, CPoint point) {
 			}
 			else if (this->editMode == Drawing::NewCircleMode) {
 				MyCircle * circle = new MyCircle(point.x, point.y, point.x, point.y);
+				circle->setFillColor(this->colorFill);
 
 				this->figures.push_back(circle);
 				this->editMode = SelectMode;

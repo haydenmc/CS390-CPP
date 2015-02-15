@@ -52,6 +52,9 @@ private:
 	// Previous mouse mode.
 	MouseMode previousMouseMode;
 
+	// Color used to fill figures
+	COLORREF colorFill;
+
 	//Figure * selectedFigure;
 
 	// Previous x and y of the mouse
@@ -76,6 +79,9 @@ public:
 
 	// Set the edit mode for the editor.
 	void setEditMode(EditMode mode);
+
+	// Set the fill color to be applied to new figures.
+	void setFillColor(COLORREF color);
 
 	// Call back when the mouse is pressed, moved, or released.
 	// It is called by the mouse call backs in MyDrawView

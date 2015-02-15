@@ -27,6 +27,7 @@ BEGIN_MESSAGE_MAP(CMyDrawView, CView)
 	ON_WM_LBUTTONDOWN()
 	ON_COMMAND(ID_FIGURE_RECTANGLE, &CMyDrawView::OnFigureRectangle)
 	ON_COMMAND(ID_FIGURE_OVAL, &CMyDrawView::OnFigureOval)
+	ON_COMMAND(ID_COLOR_CHANGEFILLCOLOR, &CMyDrawView::OnColorChangeFillColor)
 END_MESSAGE_MAP()
 
 // CMyDrawView construction/destruction
@@ -142,4 +143,17 @@ void CMyDrawView::OnFigureOval()
 {
 	CMyDrawDoc* pDoc = GetDocument();
 	pDoc->drawing.setEditMode(Drawing::NewCircleMode);
+}
+
+
+void CMyDrawView::OnColorChangeFillColor()
+{
+	CMyDrawDoc* pDoc = GetDocument();
+	// Get the selected color from the CColorDialog. 
+	CColorDialog dlg;
+	if (dlg.DoModal() == IDOK)
+	{
+		COLORREF color = dlg.GetColor();
+		pDoc->drawing.setFillColor(color);
+	}
 }

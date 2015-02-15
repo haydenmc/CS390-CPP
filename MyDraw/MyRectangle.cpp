@@ -29,6 +29,7 @@ void MyRectangle::draw(CDC* pDC)
 	// Draw rectangle
 	CPen pen(PS_SOLID, 0, RGB(0, 0, 0));
 	CPen* pOldPen = pDC->SelectObject(&pen);
+	pDC->FillSolidRect(minX, minY, maxX - minX, maxY - minY, this->fillColor);
 	pDC->MoveTo(minX, minY);
 	pDC->LineTo(maxX, minY);
 	pDC->LineTo(maxX, maxY);

@@ -27,7 +27,9 @@ void MyCircle::draw(CDC* pDC)
 
 	// Draw circle
 	CPen pen(PS_SOLID, 0, RGB(0, 0, 0));
+	CBrush fillBrush(this->fillColor);
 	pDC->SelectObject(&pen);
+	pDC->SelectObject(&fillBrush);
 	pDC->Ellipse(minX, minY, maxX, maxY);
 }
 
