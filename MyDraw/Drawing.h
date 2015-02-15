@@ -36,7 +36,7 @@ class Drawing
 {
 public:
 	// Mode of the Drawing editor.
-	enum EditMode {SelectMode, NewLineMode, NewRectangleMode };
+	enum EditMode {SelectMode, NewLineMode, NewRectangleMode, NewCircleMode };
 
 	// Mouse Button Mode.
 	enum MouseMode { NoButtonPressed, ButtonPressed };

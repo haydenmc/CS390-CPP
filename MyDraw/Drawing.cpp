@@ -23,6 +23,7 @@ MERCHANTABILITY AND FITNESS FOR ANY PARTICULAR PURPOSE.
 #include "Drawing.h"
 #include "Line.h"
 #include "MyRectangle.h"
+#include "MyCircle.h"
 
 // Constructor/Destructor
 Drawing::Drawing(void)
@@ -128,6 +129,17 @@ Drawing::OnMouse(CView * cview, int nFlags, CPoint point) {
 				this->previousY = point.y;
 
 				// Redraw window. This will call the draw method.
+				cview->RedrawWindow();
+			}
+			else if (this->editMode == Drawing::NewCircleMode) {
+				MyCircle * circle = new MyCircle(point.x, point.y, point.x, point.y);
+
+				this->figures.push_back(circle);
+				this->editMode = SelectMode;
+				this->selectAll(false);
+				circle->selectLast(true);
+				this->previousX = point.x;
+				this->previousY = point.y;
 				cview->RedrawWindow();
 			}
 			else if (this->editMode == Drawing::SelectMode) {
