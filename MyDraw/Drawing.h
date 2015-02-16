@@ -83,6 +83,9 @@ public:
 	// Set the fill color to be applied to new figures.
 	void setFillColor(COLORREF color);
 
+	// Delete any selected figure.
+	void deleteSelected(CView * cview);
+
 	// Call back when the mouse is pressed, moved, or released.
 	// It is called by the mouse call backs in MyDrawView
 	void OnMouse(CView * cview, int nFlags, CPoint point);

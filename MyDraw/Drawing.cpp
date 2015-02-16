@@ -315,6 +315,17 @@ bool Drawing::isSelected() {
 	return false;
 }
 
+// Delete selected figures from drawing
+void Drawing::deleteSelected(CView * cview) {
+	for (int i = this->figures.size() - 1; i >= 0; i--) {
+		Figure * f = figures.at(i);
+		if (f->isSelected()) {
+			figures.erase(figures.begin() + i);
+		}
+	}
+	cview->RedrawWindow();
+}
+
 // Find the control point that encloses the coordinates (x,y)
 ControlPoint * Drawing::findControlPoint(int x, int y)
 {

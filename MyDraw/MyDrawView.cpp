@@ -28,6 +28,7 @@ BEGIN_MESSAGE_MAP(CMyDrawView, CView)
 	ON_COMMAND(ID_FIGURE_RECTANGLE, &CMyDrawView::OnFigureRectangle)
 	ON_COMMAND(ID_FIGURE_OVAL, &CMyDrawView::OnFigureOval)
 	ON_COMMAND(ID_COLOR_CHANGEFILLCOLOR, &CMyDrawView::OnColorChangeFillColor)
+	ON_COMMAND(ID_EDIT_DELETE, &CMyDrawView::OnEditDelete)
 END_MESSAGE_MAP()
 
 // CMyDrawView construction/destruction
@@ -156,4 +157,11 @@ void CMyDrawView::OnColorChangeFillColor()
 		COLORREF color = dlg.GetColor();
 		pDoc->drawing.setFillColor(color);
 	}
+}
+
+
+void CMyDrawView::OnEditDelete()
+{
+	CMyDrawDoc* pDoc = GetDocument();
+	pDoc->drawing.deleteSelected(this);
 }
