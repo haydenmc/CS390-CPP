@@ -90,7 +90,13 @@ public:
 	void groupSelected(CView * cview);
 
 	// Split selected group into individual figures.
-	void Drawing::ungroupSelected(CView * cview);
+	void ungroupSelected(CView * cview);
+
+	// Send selected to front
+	void sendSelectedToFront(CView * cview);
+
+	// Send selected to back
+	void sendSelectedToBack(CView * cview);
 
 	// Call back when the mouse is pressed, moved, or released.
 	// It is called by the mouse call backs in MyDrawView

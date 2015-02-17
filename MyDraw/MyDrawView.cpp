@@ -31,6 +31,8 @@ BEGIN_MESSAGE_MAP(CMyDrawView, CView)
 	ON_COMMAND(ID_EDIT_DELETE, &CMyDrawView::OnEditDelete)
 	ON_COMMAND(ID_EDIT_GROUP, &CMyDrawView::OnEditGroup)
 	ON_COMMAND(ID_EDIT_UNGROUP, &CMyDrawView::OnEditUngroup)
+	ON_COMMAND(ID_EDIT_BRINGTOFRONT, &CMyDrawView::OnEditBringtofront)
+	ON_COMMAND(ID_EDIT_SENDTOBACK, &CMyDrawView::OnEditSendtoback)
 END_MESSAGE_MAP()
 
 // CMyDrawView construction/destruction
@@ -180,4 +182,18 @@ void CMyDrawView::OnEditUngroup()
 {
 	CMyDrawDoc* pDoc = GetDocument();
 	pDoc->drawing.ungroupSelected(this);
+}
+
+
+void CMyDrawView::OnEditBringtofront()
+{
+	CMyDrawDoc* pDoc = GetDocument();
+	pDoc->drawing.sendSelectedToFront(this);
+}
+
+
+void CMyDrawView::OnEditSendtoback()
+{
+	CMyDrawDoc* pDoc = GetDocument();
+	pDoc->drawing.sendSelectedToBack(this);
 }

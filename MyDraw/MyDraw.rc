@@ -159,6 +159,9 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Group",                       ID_EDIT_GROUP
         MENUITEM "Ungroup",                     ID_EDIT_UNGROUP
+        MENUITEM SEPARATOR
+        MENUITEM "Bring To Front",              ID_EDIT_BRINGTOFRONT
+        MENUITEM "Send To Back",                ID_EDIT_SENDTOBACK
     END
     POPUP "&View"
     BEGIN

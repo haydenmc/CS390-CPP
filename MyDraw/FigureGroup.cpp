@@ -7,7 +7,7 @@ FigureGroup::FigureGroup() : Figure(Figure::FigureType::Group)
 }
 
 void FigureGroup::addFigure(Figure * figure) {
-	this->groupFigures.push_back(figure);
+	this->groupFigures.insert(this->groupFigures.begin(), figure);
 	calculateBounds();
 }
 

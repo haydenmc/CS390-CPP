@@ -321,15 +321,22 @@ bool Drawing::isSelected() {
 
 void Drawing::groupSelected(CView * cview) {
 	FigureGroup * g = new FigureGroup();
+	int lastIndex = -1;
 	for (int i = this->figures.size() - 1; i >= 0; i--) {
 		Figure * f = figures.at(i);
 		if (f->isSelected()) {
+			lastIndex = i;
 			f->select(false);
 			figures.erase(figures.begin() + i);
 			g->addFigure(f);
 		}
 	}
-	figures.push_back(g);
+	// Check that we have at least one figure selected
+	if (lastIndex < 0) {
+		delete g;
+		return;
+	}
+	figures.insert(figures.begin() + lastIndex, g);
 	selectAll(false);
 	cview->RedrawWindow();
 }
@@ -342,11 +349,33 @@ void Drawing::ungroupSelected(CView * cview) {
 			FigureGroup * group = dynamic_cast<FigureGroup*>(f);
 			auto groupFigures = group->getGroupFigures();
 			while (groupFigures.size() > 0) {
-				figures.push_back(groupFigures.back());
+				figures.insert(figures.begin() + (i + 1), groupFigures.back());
 				groupFigures.back()->select(true);
 				groupFigures.pop_back();
 			}
 			figures.erase(figures.begin() + i);
+		}
+	}
+	cview->RedrawWindow();
+}
+
+void Drawing::sendSelectedToBack(CView * cview) {
+	for (int i = 0; i < this->figures.size(); i++) {
+		Figure * f = figures.at(i);
+		if (f->isSelected()) {
+			figures.erase(figures.begin() + i);
+			figures.insert(figures.begin(), f);
+		}
+	}
+	cview->RedrawWindow();
+}
+
+void Drawing::sendSelectedToFront(CView * cview) {
+	for (int i = this->figures.size() - 1; i >= 0; i--) {
+		Figure * f = figures.at(i);
+		if (f->isSelected()) {
+			figures.erase(figures.begin() + i);
+			figures.push_back(f);
 		}
 	}
 	cview->RedrawWindow();
