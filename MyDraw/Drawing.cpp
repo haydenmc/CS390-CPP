@@ -21,9 +21,11 @@ MERCHANTABILITY AND FITNESS FOR ANY PARTICULAR PURPOSE.
 
 #include "StdAfx.h"
 #include "Drawing.h"
+#include "Figure.h"
 #include "Line.h"
 #include "MyRectangle.h"
 #include "MyCircle.h"
+#include "FigureGroup.h"
 
 // Constructor/Destructor
 Drawing::Drawing(void)
@@ -264,7 +266,9 @@ Drawing::OnMouse(CView * cview, int nFlags, CPoint point) {
 void Drawing::dragSelectedControlPoints( int dx, int dy ) {
 	for (unsigned i = 0; i < this->figures.size(); i++) {
 		Figure * f = figures.at(i);
-		f->dragSelectedControlPoints(dx, dy);
+		if (f->isSelected()) {
+			f->dragSelectedControlPoints(dx, dy);
+		}
 	}
 }
 
@@ -313,6 +317,39 @@ bool Drawing::isSelected() {
 	}
 
 	return false;
+}
+
+void Drawing::groupSelected(CView * cview) {
+	FigureGroup * g = new FigureGroup();
+	for (int i = this->figures.size() - 1; i >= 0; i--) {
+		Figure * f = figures.at(i);
+		if (f->isSelected()) {
+			f->select(false);
+			figures.erase(figures.begin() + i);
+			g->addFigure(f);
+		}
+	}
+	figures.push_back(g);
+	selectAll(false);
+	cview->RedrawWindow();
+}
+
+void Drawing::ungroupSelected(CView * cview) {
+	for (int i = this->figures.size() - 1; i >= 0; i--) {
+		Figure * f = figures.at(i);
+		if (f->isSelected() && f->figureType == Figure::FigureType::Group) {
+			f->select(false);
+			FigureGroup * group = dynamic_cast<FigureGroup*>(f);
+			auto groupFigures = group->getGroupFigures();
+			while (groupFigures.size() > 0) {
+				figures.push_back(groupFigures.back());
+				groupFigures.back()->select(true);
+				groupFigures.pop_back();
+			}
+			figures.erase(figures.begin() + i);
+		}
+	}
+	cview->RedrawWindow();
 }
 
 // Delete selected figures from drawing

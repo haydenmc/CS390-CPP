@@ -29,6 +29,8 @@ BEGIN_MESSAGE_MAP(CMyDrawView, CView)
 	ON_COMMAND(ID_FIGURE_OVAL, &CMyDrawView::OnFigureOval)
 	ON_COMMAND(ID_COLOR_CHANGEFILLCOLOR, &CMyDrawView::OnColorChangeFillColor)
 	ON_COMMAND(ID_EDIT_DELETE, &CMyDrawView::OnEditDelete)
+	ON_COMMAND(ID_EDIT_GROUP, &CMyDrawView::OnEditGroup)
+	ON_COMMAND(ID_EDIT_UNGROUP, &CMyDrawView::OnEditUngroup)
 END_MESSAGE_MAP()
 
 // CMyDrawView construction/destruction
@@ -164,4 +166,18 @@ void CMyDrawView::OnEditDelete()
 {
 	CMyDrawDoc* pDoc = GetDocument();
 	pDoc->drawing.deleteSelected(this);
+}
+
+
+void CMyDrawView::OnEditGroup()
+{
+	CMyDrawDoc* pDoc = GetDocument();
+	pDoc->drawing.groupSelected(this);
+}
+
+
+void CMyDrawView::OnEditUngroup()
+{
+	CMyDrawDoc* pDoc = GetDocument();
+	pDoc->drawing.ungroupSelected(this);
 }

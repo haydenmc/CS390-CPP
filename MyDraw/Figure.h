@@ -32,12 +32,10 @@ class Figure
 {
 public:
 	// Figure type. You may need to add more types here
-	enum FigureType { Line, Rectangle, Circle, Text };
-
-protected:
-
+	enum FigureType { Line, Rectangle, Circle, Text, Group };
 	// Type of this figure.
 	FigureType figureType;
+protected:
 
 	COLORREF fillColor;
 

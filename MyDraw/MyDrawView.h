@@ -49,6 +49,8 @@ public:
 	afx_msg void OnFigureOval();
 	afx_msg void OnColorChangeFillColor();
 	afx_msg void OnEditDelete();
+	afx_msg void OnEditGroup();
+	afx_msg void OnEditUngroup();
 };
 
 #ifndef _DEBUG  // debug version in MyDrawView.cpp

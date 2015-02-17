@@ -86,6 +86,12 @@ public:
 	// Delete any selected figure.
 	void deleteSelected(CView * cview);
 
+	// Join selected figures into a new group figure.
+	void groupSelected(CView * cview);
+
+	// Split selected group into individual figures.
+	void Drawing::ungroupSelected(CView * cview);
+
 	// Call back when the mouse is pressed, moved, or released.
 	// It is called by the mouse call backs in MyDrawView
 	void OnMouse(CView * cview, int nFlags, CPoint point);

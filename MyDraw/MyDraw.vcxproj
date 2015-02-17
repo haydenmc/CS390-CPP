@@ -114,6 +114,7 @@
     <ClCompile Include="ControlPoint.cpp" />
     <ClCompile Include="Drawing.cpp" />
     <ClCompile Include="Figure.cpp" />
+    <ClCompile Include="FigureGroup.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MyCircle.cpp" />
@@ -131,6 +132,7 @@
     <ClInclude Include="ControlPoint.h" />
     <ClInclude Include="Drawing.h" />
     <ClInclude Include="Figure.h" />
+    <ClInclude Include="FigureGroup.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MyCircle.h" />
