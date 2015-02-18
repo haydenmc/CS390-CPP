@@ -6,6 +6,12 @@ FigureGroup::FigureGroup() : Figure(Figure::FigureType::Group)
 {
 }
 
+FigureGroup::FigureGroup(FigureGroup & g) : Figure(g) {
+	for (int i = 0; i < g.groupFigures.size(); i++) {
+		this->groupFigures.push_back(g.groupFigures.at(i)->clone());
+	}
+}
+
 void FigureGroup::addFigure(Figure * figure) {
 	this->groupFigures.insert(this->groupFigures.begin(), figure);
 	calculateBounds();
@@ -87,7 +93,10 @@ bool FigureGroup::isCloseTo(int x, int y)
 	return false;
 }
 
-
+FigureGroup * FigureGroup::clone() {
+	FigureGroup * clone = new FigureGroup(*this);
+	return clone;
+}
 
 FigureGroup::~FigureGroup()
 {

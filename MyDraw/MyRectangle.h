@@ -12,5 +12,7 @@ public:
 
 	// Return true if rectangle is close to coordinates (x,y)
 	bool isCloseTo(int x, int y);
+
+	MyRectangle * clone();
 };
 

@@ -50,6 +50,12 @@ public:
 	Figure(FigureType figureType);
 	~Figure(void);
 
+	// Copy constructor
+	Figure(Figure &f);
+
+	// Virtual constructor
+	virtual Figure * clone() = 0;
+
 	// Get the list of all control points
 	virtual const vector<ControlPoint *> & getControlPoints();
 

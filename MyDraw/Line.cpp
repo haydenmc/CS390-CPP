@@ -61,3 +61,7 @@ bool Line::isCloseTo(int x, int y)
 	return false;
 }
 
+Line * Line::clone() {
+	Line * clone = new Line(*this);
+	return clone;
+}

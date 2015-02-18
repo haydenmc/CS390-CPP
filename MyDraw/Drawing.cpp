@@ -381,6 +381,24 @@ void Drawing::sendSelectedToFront(CView * cview) {
 	cview->RedrawWindow();
 }
 
+void Drawing::copySelected(CView * cview) {
+	this->clipboard.clear();
+	for (int i = this->figures.size() - 1; i >= 0; i--) {
+		Figure * f = figures.at(i)->clone();
+		if (f->isSelected()) {
+			this->clipboard.push_back(f);
+		}
+	}
+}
+
+void Drawing::paste(CView * cview) {
+	for (int i = 0; i < this->clipboard.size(); i++)  {
+		Figure * clipboardFigure = this->clipboard.at(i)->clone();
+		this->figures.push_back(clipboardFigure);
+	}
+	cview->RedrawWindow();
+}
+
 // Delete selected figures from drawing
 void Drawing::deleteSelected(CView * cview) {
 	for (int i = this->figures.size() - 1; i >= 0; i--) {

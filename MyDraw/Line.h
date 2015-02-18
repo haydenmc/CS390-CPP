@@ -19,5 +19,7 @@ public:
 
 	// Return true if line is close to coordinates (x,y)
 	bool isCloseTo(int x, int y);
+
+	Line * clone();
 };
 

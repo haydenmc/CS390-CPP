@@ -38,6 +38,16 @@ Figure::~Figure(void)
 {
 }
 
+// Copy constructor
+Figure::Figure(Figure &f) {
+	this->figureType = f.figureType;
+	this->fillColor = f.fillColor;
+	for (int i = 0; i < f.controlPoints.size(); i++) {
+		ControlPoint * pointCopy = new ControlPoint(*(f.controlPoints.at(i)));
+		this->controlPoints.push_back(pointCopy);
+	}
+}
+
 // Get/Set id of this figure
 Figure::FigureType Figure::getFigureType() const
 {

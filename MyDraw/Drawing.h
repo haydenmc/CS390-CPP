@@ -46,6 +46,9 @@ private:
 	// This is the list of all the figures in the drawing.
 	vector<Figure *> figures;
 
+	// Place to store the figures copied.
+	vector<Figure *> clipboard;
+
 	// Current Edit mode. When the new line is selected in the Figure menu, the NewLineMode is set here.
 	EditMode editMode;
 
@@ -97,6 +100,10 @@ public:
 
 	// Send selected to back
 	void sendSelectedToBack(CView * cview);
+
+	void copySelected(CView * cview);
+
+	void paste(CView * cview);
 
 	// Call back when the mouse is pressed, moved, or released.
 	// It is called by the mouse call backs in MyDrawView

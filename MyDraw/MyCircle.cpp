@@ -55,3 +55,8 @@ bool MyCircle::isCloseTo(int x, int y)
 
 	return false;
 }
+
+MyCircle * MyCircle::clone() {
+	MyCircle * clone = new MyCircle(*this);
+	return clone;
+}

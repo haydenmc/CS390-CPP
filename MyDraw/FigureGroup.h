@@ -9,6 +9,7 @@ protected:
 	vector<Figure *> groupFigures;
 public:
 	FigureGroup();
+	FigureGroup(FigureGroup & g);
 	void addFigure(Figure * figure);
 	// Draw a group using graphic context pDC
 	void draw(CDC* pDC);
@@ -16,6 +17,7 @@ public:
 	bool isCloseTo(int x, int y);
 	void dragSelectedControlPoints(int dx, int dy);
 	vector<Figure *> getGroupFigures();
+	FigureGroup * clone();
 	~FigureGroup();
 };
 
