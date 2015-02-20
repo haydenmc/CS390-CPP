@@ -33,7 +33,7 @@ Drawing::Drawing(void)
 	this->colorFill = RGB(0, 0, 0);
 	// Initial mode is selectMode
 	this->editMode = SelectMode;
-
+	this->pendingChanges = false;
 	// Initial state for mouse button is not pressed.
 	this->previousMouseMode = Drawing::NoButtonPressed;
 }
@@ -119,6 +119,8 @@ Drawing::OnMouse(CView * cview, int nFlags, CPoint point) {
 				this->previousX = point.x;
 				this->previousY = point.y;
 
+				this->pendingChanges = true;
+
 				// Redraw window. This will call the draw method.
 				cview->RedrawWindow();
 			}
@@ -146,6 +148,8 @@ Drawing::OnMouse(CView * cview, int nFlags, CPoint point) {
 				this->previousX = point.x;
 				this->previousY = point.y;
 
+				this->pendingChanges = true;
+
 				// Redraw window. This will call the draw method.
 				cview->RedrawWindow();
 			}
@@ -159,6 +163,8 @@ Drawing::OnMouse(CView * cview, int nFlags, CPoint point) {
 				circle->selectLast(true);
 				this->previousX = point.x;
 				this->previousY = point.y;
+
+				this->pendingChanges = true;
 				cview->RedrawWindow();
 			}
 			else if (this->editMode == Drawing::SelectMode) {
@@ -236,6 +242,8 @@ Drawing::OnMouse(CView * cview, int nFlags, CPoint point) {
 				// Update previous mouse coordinates
 				this->previousX = point.x;
 				this->previousY = point.y;
+
+				this->pendingChanges = true;
 			}
 			else {
 				// There are no control points selected and mouse is being dragged.
@@ -262,6 +270,12 @@ Drawing::OnMouse(CView * cview, int nFlags, CPoint point) {
 				// Erase selection rectangle
 				this->disableSelectionRectangle();
 			}
+
+			if (this->pendingChanges) {
+				saveUndoState();
+				this->pendingChanges = false;
+			}
+
 			cview->RedrawWindow();
 		}
 
@@ -413,6 +427,7 @@ void Drawing::deleteSelected(CView * cview) {
 		if (f->isSelected()) {
 			figures.erase(figures.begin() + i);
 		}
+		delete f;
 	}
 	cview->RedrawWindow();
 }
@@ -476,3 +491,19 @@ void Drawing::drawSelectionRectangle(CDC *pDC)
 	pDC->LineTo(this->selectionRectangleX0, this->selectionRectangleY0);
 }
 
+void Drawing::saveUndoState() {
+	vector<Figure *>* state = new vector<Figure *>();
+	for (int i = 0; i < figures.size(); i++) {
+		state->push_back(figures.at(i)->clone());
+	}
+	undoStack.push_back(*state);
+}
+
+void Drawing::performUndo(CView * cview) {
+	if (undoStack.size() > 1) {
+		vector<Figure *> undoState = undoStack.at(undoStack.size() - 2);
+		undoStack.pop_back();
+		this->figures = undoState;
+		cview->RedrawWindow();
+	}
+}

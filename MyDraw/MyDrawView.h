@@ -55,6 +55,7 @@ public:
 	afx_msg void OnEditSendtoback();
 	afx_msg void OnEditPaste();
 	afx_msg void OnEditCopy();
+	afx_msg void OnEditUndo();
 };
 
 #ifndef _DEBUG  // debug version in MyDrawView.cpp

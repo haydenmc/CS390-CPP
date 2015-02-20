@@ -22,12 +22,12 @@ MERCHANTABILITY AND FITNESS FOR ANY PARTICULAR PURPOSE.
 */
 
 
-#include <vector>
+#include<vector>
 
 using namespace std;
 
-#include "Figure.h"
-#include "Line.h"
+#include"Figure.h"
+#include"Line.h"
 
 // This is the main class for the drawing editor.
 // It also represents the whole drawing. 
@@ -48,6 +48,11 @@ private:
 
 	// Place to store the figures copied.
 	vector<Figure *> clipboard;
+
+	// Undo stack
+	vector<vector<Figure *>> undoStack;
+
+	bool pendingChanges;
 
 	// Current Edit mode. When the new line is selected in the Figure menu, the NewLineMode is set here.
 	EditMode editMode;
@@ -138,5 +143,9 @@ public:
 
 	// Return true if there is a selected figure close to (x,y)
 	bool isAnySelectedFigureCloseTo(int x, int y);
+
+	void saveUndoState();
+
+	void performUndo(CView * cview);
 };
 

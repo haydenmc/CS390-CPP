@@ -152,4 +152,7 @@ FigureGroup * FigureGroup::clone() {
 
 FigureGroup::~FigureGroup()
 {
+	for (int i = groupFigures.size() - 1; i >= 0; i--) {
+		delete groupFigures.at(i);
+	}
 }

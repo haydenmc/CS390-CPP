@@ -35,6 +35,7 @@ BEGIN_MESSAGE_MAP(CMyDrawView, CView)
 	ON_COMMAND(ID_EDIT_SENDTOBACK, &CMyDrawView::OnEditSendtoback)
 	ON_COMMAND(ID_EDIT_PASTE, &CMyDrawView::OnEditPaste)
 	ON_COMMAND(ID_EDIT_COPY, &CMyDrawView::OnEditCopy)
+	ON_COMMAND(ID_EDIT_UNDO, &CMyDrawView::OnEditUndo)
 END_MESSAGE_MAP()
 
 // CMyDrawView construction/destruction
@@ -212,4 +213,11 @@ void CMyDrawView::OnEditCopy()
 {
 	CMyDrawDoc* pDoc = GetDocument();
 	pDoc->drawing.copySelected(this);
+}
+
+
+void CMyDrawView::OnEditUndo()
+{
+	CMyDrawDoc* pDoc = GetDocument();
+	pDoc->drawing.performUndo(this);
 }
