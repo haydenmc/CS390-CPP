@@ -45,6 +45,8 @@ void FigureGroup::calculateBounds() {
 	}
 	controlPoints.push_back(new ControlPoint(this, minX, minY));
 	controlPoints.push_back(new ControlPoint(this, maxX, maxY));
+	this->width = maxX - minX;
+	this->height = maxY - minY;
 }
 
 void FigureGroup::draw(CDC* pDC)
@@ -57,23 +59,65 @@ void FigureGroup::draw(CDC* pDC)
 // Move the control points that are selected an increment dx,dy 
 void FigureGroup::dragSelectedControlPoints(int dx, int dy)
 {
-	// Move all of our child figures...
-	for (auto iter = this->groupFigures.begin(); iter < this->groupFigures.end(); iter++) {
-		if ((*iter)->figureType == FigureType::Group) {
-			(*iter)->dragSelectedControlPoints(dx, dy);
-		}
-		else {
-			for (auto pointIter = (*iter)->getControlPoints().begin(); pointIter < (*iter)->getControlPoints().end(); pointIter++) {
-				auto point = *pointIter;
-				point->move(point->getX() + dx, point->getY() + dy);
-			}
-		}
-	}
-	// Move group control points...
+	// record our current bounds
+	int minX = controlPoints.at(0)->getX();
+	int minY = controlPoints.at(0)->getY();
+	int maxX = controlPoints.at(1)->getX();
+	int maxY = controlPoints.at(1)->getY();
+
+	// Move 'em
 	for (unsigned i = 0; i < this->controlPoints.size(); i++) {
 		ControlPoint * c = controlPoints.at(i);
 		if (c->isSelected()) {
 			c->move(c->getX() + dx, c->getY() + dy);
+		}
+	}
+
+	scaleChildren(minX, minY, maxX, maxY);
+}
+
+void FigureGroup::scaleChildren(int minX, int minY, int maxX, int maxY) {
+	// record our new bounds
+	int newMinX = controlPoints.at(0)->getX();
+	int newMinY = controlPoints.at(0)->getY();
+	int newMaxX = controlPoints.at(1)->getX();
+	int newMaxY = controlPoints.at(1)->getY();
+
+	// Calculate origin shift
+	int shiftX = 0, shiftY = 0;
+	shiftX = newMinX - minX;
+	shiftY = newMinY - minY;
+
+	// Calculate new width / height
+	int newWidth = newMaxX - newMinX;
+	int newHeight = newMaxY - newMinY;
+
+	// Calculate scale w.r.t. origin
+	long double horizontalScale = (double)newWidth / (double)this->width;
+	long double verticalScale = (double)newHeight / (double)this->height;
+
+	this->width = newWidth;
+	this->height = newHeight;
+
+	// Move child control points
+	for (auto iter = this->groupFigures.begin(); iter < this->groupFigures.end(); iter++) {	
+		if ((*iter)->figureType == FigureType::Group) {
+			int minX = (*iter)->getControlPoints().at(0)->getX();
+			int minY = (*iter)->getControlPoints().at(0)->getY();
+			int maxX = (*iter)->getControlPoints().at(1)->getX();
+			int maxY = (*iter)->getControlPoints().at(1)->getY();
+		}
+		for (auto pointIter = (*iter)->getControlPoints().begin(); pointIter < (*iter)->getControlPoints().end(); pointIter++) {
+			auto point = *pointIter;
+			int pointX = point->getX() + shiftX;
+			int pointY = point->getY() + shiftY;
+			int moveX = 0, moveY = 0;
+			moveX = (long double)(pointX - newMinX) * (long double)(horizontalScale - 1);
+			moveY = (long double)(pointY - newMinY) * (long double)(verticalScale - 1);
+			point->move(pointX + moveX, pointY + moveY);
+		}
+		if ((*iter)->figureType == FigureType::Group) {
+			dynamic_cast<FigureGroup *>(*iter)->scaleChildren(minX, minY, maxX, maxY);
 		}
 	}
 }

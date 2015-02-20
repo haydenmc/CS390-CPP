@@ -5,6 +5,8 @@ class FigureGroup :
 {
 private:
 	void calculateBounds();
+	int width;
+	int height;
 protected:
 	vector<Figure *> groupFigures;
 public:
@@ -18,6 +20,7 @@ public:
 	void dragSelectedControlPoints(int dx, int dy);
 	vector<Figure *> getGroupFigures();
 	void setFillColor(COLORREF color);
+	void scaleChildren(int minX, int minY, int maxX, int maxY);
 	FigureGroup * clone();
 	~FigureGroup();
 };
