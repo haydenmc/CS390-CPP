@@ -17,6 +17,7 @@ public:
 	bool isCloseTo(int x, int y);
 	void dragSelectedControlPoints(int dx, int dy);
 	vector<Figure *> getGroupFigures();
+	void setFillColor(COLORREF color);
 	FigureGroup * clone();
 	~FigureGroup();
 };

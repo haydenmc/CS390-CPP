@@ -60,7 +60,7 @@ public:
 	virtual const vector<ControlPoint *> & getControlPoints();
 
 	// Set the fill color
-	void setFillColor(COLORREF color);
+	virtual void setFillColor(COLORREF color);
 
 	// Draw figure. Implemented in subclasses.
 	virtual void draw(CDC* pDC) = 0;

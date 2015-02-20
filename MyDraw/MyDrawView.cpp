@@ -161,7 +161,7 @@ void CMyDrawView::OnColorChangeFillColor()
 	if (dlg.DoModal() == IDOK)
 	{
 		COLORREF color = dlg.GetColor();
-		pDoc->drawing.setFillColor(color);
+		pDoc->drawing.setFillColor(this, color);
 	}
 }
 

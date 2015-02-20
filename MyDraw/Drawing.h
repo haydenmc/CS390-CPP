@@ -84,7 +84,7 @@ public:
 	void setEditMode(EditMode mode);
 
 	// Set the fill color to be applied to new figures.
-	void setFillColor(COLORREF color);
+	void setFillColor(CView * cview, COLORREF color);
 
 	// Delete any selected figure.
 	void deleteSelected(CView * cview);

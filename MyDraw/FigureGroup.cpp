@@ -93,6 +93,14 @@ bool FigureGroup::isCloseTo(int x, int y)
 	return false;
 }
 
+void FigureGroup::setFillColor(COLORREF color)
+{
+	this->fillColor = color;
+	for (auto iter = this->groupFigures.begin(); iter < this->groupFigures.end(); iter++) {
+		(*iter)->setFillColor(color);
+	}
+}
+
 FigureGroup * FigureGroup::clone() {
 	FigureGroup * clone = new FigureGroup(*this);
 	return clone;

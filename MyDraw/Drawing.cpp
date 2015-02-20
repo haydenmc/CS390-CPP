@@ -66,9 +66,16 @@ Drawing::setEditMode(EditMode mode)
 
 // Set the fill color
 void
-Drawing::setFillColor(COLORREF color)
+Drawing::setFillColor(CView * cview, COLORREF color)
 {
 	this->colorFill = color;
+	for (int i = 0; i < this->figures.size(); i++) {
+		Figure * f = figures.at(i);
+		if (f->isSelected()) {
+			f->setFillColor(color);
+		}
+	}
+	cview->RedrawWindow();
 }
 
 // Call back when the mouse is pressed, moved, or released.
