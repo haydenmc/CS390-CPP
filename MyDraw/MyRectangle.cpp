@@ -50,10 +50,17 @@ bool MyRectangle::isCloseTo(int x, int y)
 	int maxY = (p0->getY()<p1->getY()) ? p1->getY() : p0->getY();
 
 	// Check if (x,y) is close to any of the borders.
-	if (Figure::distancePointToLine(x, y, minX, minY, maxX, minY) < Figure::smallDistance ||
+	/*if (Figure::distancePointToLine(x, y, minX, minY, maxX, minY) < Figure::smallDistance ||
 		Figure::distancePointToLine(x, y, maxX, minY, maxX, maxY) < Figure::smallDistance ||
 		Figure::distancePointToLine(x, y, minX, maxY, maxX, maxY) < Figure::smallDistance ||
 		Figure::distancePointToLine(x, y, minX, minY, minX, maxY) < Figure::smallDistance) {
+		return true;
+	}*/
+
+	// Check if (x,y) is inside the borders.
+	if (x >= minX && x <= maxX &&
+		y >= minY && y <= maxY)
+	{
 		return true;
 	}
 

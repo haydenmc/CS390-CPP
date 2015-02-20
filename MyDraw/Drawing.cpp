@@ -304,7 +304,7 @@ bool Drawing::isAnySelectedFigureCloseTo(int x, int y)
 // Return the figure selected or unselected that is close to the coordinate (x,y)
 Figure * Drawing::isAnyFigureCloseTo(int x, int y) 
 {
-	for (unsigned i = 0; i < this->figures.size(); i++) {
+	for (int i = this->figures.size() - 1; i >=0 ; i--) {
 		Figure * f = figures.at(i);
 		if ( f->isCloseTo(x,y) ) {
 			return f;
